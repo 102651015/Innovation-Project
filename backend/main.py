@@ -23,7 +23,7 @@ async def root():
 @app.get("/predict/{rooms}/{buildingArea}/{type}/{yearBuilt}/{bathroom}/{carspace}")
 async def predict_price(rooms: int, buildingArea: int, type: int, yearBuilt: int, bathroom: int, carspace: int):
     #Category, where: 0 is Affordable, and 1 is Expensive
-    category = model.predict(rooms, buildingArea, type, yearBuilt, bathroom, carspace)[0]
+    category = int(model.predict(rooms, buildingArea, type, yearBuilt, bathroom, carspace)[0])
     return {"predicted_category": category}
 
 if __name__ == "__main__":
