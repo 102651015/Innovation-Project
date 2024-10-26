@@ -1,8 +1,5 @@
 import pandas as pd
-import scipy
-from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import MinMaxScaler
@@ -89,7 +86,6 @@ class KNNmodel:
         #Scale Data
         scaler = MinMaxScaler()
         X_train_scaled = scaler.fit_transform(X_train)  # Scale the training set
-        #X_test_scaled = scaler.transform(X_test)         # Scale the testing set
 
         #TRAIN
         #Train the model
