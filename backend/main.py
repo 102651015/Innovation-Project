@@ -24,7 +24,11 @@ async def root():
 async def predict_price(rooms: int, buildingArea: int, type: int, yearBuilt: int, bathroom: int, carspace: int):
     #Category, where: 0 is Affordable, and 1 is Expensive
     category = int(model.predict(rooms, buildingArea, type, yearBuilt, bathroom, carspace)[0])
-    return {"predicted_category": category}
+    if category == 0:
+        category_string = 'Affordable'
+    else:
+        category_string = 'Expensive'
+    return {"predicted_category": category_string}
 
 if __name__ == "__main__":
     import uvicorn
