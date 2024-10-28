@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import {
   AppBar, Toolbar, Typography, Container, Grid, Card, CardContent, Button, Box,
@@ -13,8 +12,14 @@ import {
   Mail as MailIcon,
   Add as AddIcon,
 } from '@mui/icons-material';
+import React, { useState } from 'react';
+import MarketAnalysis from '../components/MarketExporer/MarketAnalysis'
 
 
 export default function HomePage() {
-  return <Button variant="contained">Hello world</Button>;
+  return (
+    <div>
+    <MarketAnalysis />
+    </div>
+  )
 }
