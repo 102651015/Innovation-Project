@@ -13,13 +13,14 @@ import {
   Add as AddIcon,
 } from '@mui/icons-material';
 import React, { useState } from 'react';
-import MarketAnalysis from '../components/MarketExporer/MarketAnalysis'
+import PriceAnalytics from '../components/MarketExporer/PriceAnalytics'
 
 
 export default function HomePage() {
   return (
     <div>
-    <MarketAnalysis />
+
+    <PriceAnalytics />
     </div>
   )
 }
