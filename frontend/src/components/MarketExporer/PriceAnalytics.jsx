@@ -12,17 +12,16 @@ const PriceAnalytics = () => {
       <section className={styles.wrapper}>
         <div className={styles.card}>
           <div className={styles.content}>
+
             <aside className={styles.chartSection}>
               <div className={styles.chartControls}>
                 <Select
                   className={styles.chartTypeSelect}
                   value=""
                   displayEmpty
-                  inputProps={{ 'aria-label': 'Select chart type' }}
-                >
+                  inputProps={{ 'aria-label': 'Select chart type' }}>
                   <MenuItem value="">Select chart Type</MenuItem>
                 </Select>
-                
                 <button className={styles.predictButton}>
                   <div className={styles.buttonContent}>
                     <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/d15d64ea902e41f8849cd1404c808385/5785c4bf432ad8ebffef6079c7c8f3bfc60a3749ae6b42c26534ea0c4a1afe14?apiKey=d15d64ea902e41f8849cd1404c808385&" alt="" className={styles.buttonIcon} />
@@ -54,6 +53,7 @@ const PriceAnalytics = () => {
                 Contact with us
               </button>
             </aside>
+
           </div>
         </div>
       </section>

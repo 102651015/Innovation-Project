@@ -19,7 +19,6 @@ import PriceAnalytics from '../components/MarketExporer/PriceAnalytics'
 export default function HomePage() {
   return (
     <div>
-
     <PriceAnalytics />
     </div>
   )

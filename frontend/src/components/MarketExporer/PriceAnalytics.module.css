@@ -1,17 +1,19 @@
 .container {
-  max-width: none !important;
+  display: flex;
+  justify-content: space-between; /* 两边对齐 */
+  width: 100%; /* 使内容占满 `wrapper` 的宽度 */
 }
 
 .wrapper {
-  border-radius: 0;
   display: flex;
   flex-direction: column;
+  border-radius: 0;
 }
 
 .card {
   border-radius: 5px;
   background-color: #fff;
-  box-shadow: 5px 5px 5px 5px rgba(132, 132, 132, 0.25);
+  box-shadow: 5px 5px 5px rgba(132, 132, 132, 0.25);
   width: 100%;
   padding: 35px 64px;
   border: 1px solid #eaeaea;
@@ -41,11 +43,11 @@
   display: flex;
   flex-direction: column;
   line-height: normal;
-  width: 20%;
+  width: 15%;
   margin-left: 0;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 15%) {
   .chartSection {
     width: 100%;
   }
@@ -81,7 +83,7 @@
   font-size: 14px;
   color: #000;
   justify-content: space-between;
-  width: 320px;
+  width: 400px;
   padding: 7px;
   border: 1px solid #e5e5e5;
 }
@@ -150,11 +152,14 @@
   display: flex;
   margin-top: 9px;
   min-height: 234px;
-  flex-grow: 1;
-  align-items: start;
+  align-items: center;
   gap: 40px 45px;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center; /* 居中对齐 */
+  flex-grow: 1; /* 使 `priceGrid` 在 `content` 中居中 */
+  max-width: 40%;
+  flex-grow: 1;
 }
 
 .priceCard {
@@ -184,10 +189,10 @@
 }
 
 .infoSection {
-  height: 236px;
-  width: 100%;
   font-family: Inter, sans-serif;
   color: #000;
+  width: 320px; /* 固定宽度，贴靠右边 */
+  align-self: flex-start;
 }
 
 .infoCard {
