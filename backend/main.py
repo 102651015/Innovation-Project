@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from model import KNNmodel
 
 app = FastAPI()
@@ -7,7 +8,7 @@ app = FastAPI()
 #Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], # URL of React application
+    allow_origins=["http://localhost:3000"],  #URL of React application
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -16,19 +17,29 @@ app.add_middleware(
 #Initialize model
 model = KNNmodel()
 
+#Prediction input model with validation
+class prediction_input(BaseModel):
+    rooms: conint(ge=0)         #Non-negative integer
+    buildingArea: conint(ge=0)  #Non-negative integer
+    type: Literal[1, 2, 3]      #Only allows integers 1, 2, or 3 for type, where: 1 - unit, 2 - house, 3 - townhouse
+    yearBuilt: conint(ge=0)     #Non-negative integer
+    bathroom: conint(ge=0)      #Non-negative integer
+    carspace: conint(ge=0)      #Non-negative integer
+
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Southern Metropolitan Region House Category Prediction API"}
 
-@app.get("/predict/{rooms}/{buildingArea}/{type}/{yearBuilt}/{bathroom}/{carspace}")
-async def predict_price(rooms: int, buildingArea: int, type: int, yearBuilt: int, bathroom: int, carspace: int):
-    #Category, where: 0 is Affordable, and 1 is Expensive
-    category = int(model.predict(rooms, buildingArea, type, yearBuilt, bathroom, carspace)[0])
-    if category == 0:
-        category_string = 'Affordable'
-    else:
-        category_string = 'Expensive'
-    return {"predicted_category": category_string}
+@app.post("/predict/")
+async def predict_category(input: prediction_input):
+    try:
+        #Category, where: 0 - Affordable, and 1 - Expensive
+        category = int(model.predict(input.rooms, input.buildingArea, input.type, 
+                                      input.yearBuilt, input.bathroom, input.carspace)[0])
+        category_string = 'Affordable' if category == 0 else 'Expensive'
+        return {"predicted_category": category_string}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
