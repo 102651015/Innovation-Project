@@ -4,6 +4,10 @@
   justify-content: center;
   padding: 20px;
   width: 100%;
+  position: fixed; /* 固定在屏幕 */
+  bottom: 0; /* 贴底部 */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #e1eff7; /* 设置淡蓝色背景 */
 }
 
 /* 内部包装容器 */
@@ -21,6 +25,7 @@
   border-radius: 5px;
   padding: 20px;
   width: 100%;
+  background-color: #F7FCFF; /* 设置淡蓝色背景 */
 }
 
 /* 主内容区域，水平分布 */
@@ -29,6 +34,7 @@
   justify-content: space-between;
   gap: 20px;
   width: 100%;
+  background-color: #F7FCFF; /* 设置淡蓝色背景 */
 }
 
 /* 图表选择区域 */
