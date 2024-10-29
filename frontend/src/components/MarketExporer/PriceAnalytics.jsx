@@ -1,12 +1,40 @@
-import React from 'react';
-import { TextField, Select, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
+import { Select, MenuItem } from '@mui/material';
 import styles from './PriceAnalytics.module.css';
 import { PriceCard } from './PriceCard';
 import { InfoButton } from './InfoButton';
 
 const PriceAnalytics = () => {
-  const priceCards = Array(6).fill(null);
-  
+  // 使用 useState 保存每个 PriceCard 的输入值
+  const [prices, setPrices] = useState(Array(6).fill(''));
+
+  const handlePriceChange = (index, value) => {
+    const updatedPrices = [...prices];
+    updatedPrices[index] = value; // 更新指定 index 的价格值
+    setPrices(updatedPrices);
+  };
+
+  const handlePredict = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prices }), // 将 prices 数组发送到后端
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Prediction result:', result);
+      } else {
+        console.error('Failed to fetch prediction');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <main className={styles.container}>
       <section className={styles.wrapper}>
@@ -22,7 +50,7 @@ const PriceAnalytics = () => {
                   inputProps={{ 'aria-label': 'Select chart type' }}>
                   <MenuItem value="">Select chart Type</MenuItem>
                 </Select>
-                <button className={styles.predictButton}>
+                <button className={styles.predictButton} onClick={handlePredict}>
                   <div className={styles.buttonContent}>
                     <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/d15d64ea902e41f8849cd1404c808385/5785c4bf432ad8ebffef6079c7c8f3bfc60a3749ae6b42c26534ea0c4a1afe14?apiKey=d15d64ea902e41f8849cd1404c808385&" alt="" className={styles.buttonIcon} />
                     <span className={styles.buttonText}>
@@ -35,8 +63,8 @@ const PriceAnalytics = () => {
             </aside>
 
             <section className={styles.priceGrid}>
-              {priceCards.map((_, index) => (
-                <PriceCard key={index} />
+              {prices.map((_, index) => (
+                <PriceCard key={index} index={index} onPriceChange={handlePriceChange} />
               ))}
             </section>
 
@@ -44,9 +72,9 @@ const PriceAnalytics = () => {
               <div className={styles.infoCard}>
                 <h2 className={styles.infoTitle}>Do you want to know more?</h2>
                 <hr className={styles.divider} />
-                <InfoButton text="button" iconSrc="https://cdn.builder.io/api/v1/image/assets/d15d64ea902e41f8849cd1404c808385/f0b15f055915ecf2e2682787501cba280e9ed1ebda7faecae148104c51bda07e?apiKey=d15d64ea902e41f8849cd1404c808385&" />
+                <InfoButton text="button" />
                 <hr className={styles.divider} />
-                <InfoButton text="button" iconSrc="https://cdn.builder.io/api/v1/image/assets/d15d64ea902e41f8849cd1404c808385/241b85aa84c5076d41b34094e0263cbaff1b994a8c979573a62b5a7eaf12a181?apiKey=d15d64ea902e41f8849cd1404c808385&" />
+                <InfoButton text="button" />
                 <hr className={styles.divider} />
               </div>
               <button className={styles.contactButton}>
