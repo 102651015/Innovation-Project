@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, conint, constr, ValidationError
+from typing import Literal
 from model import KNNmodel
 
 app = FastAPI()
@@ -31,9 +32,9 @@ async def root():
     return {"message": "Welcome to the Southern Metropolitan Region House Category Prediction API"}
 
 @app.post("/predict/")
-async def predict_category(input: prediction_input):
+async def predict_price(input: prediction_input):
     try:
-        #Category, where: 0 - Affordable, and 1 - Expensive
+        #Category, where: 0 is Affordable, and 1 is Expensive
         category = int(model.predict(input.rooms, input.buildingArea, input.type, 
                                       input.yearBuilt, input.bathroom, input.carspace)[0])
         category_string = 'Affordable' if category == 0 else 'Expensive'
