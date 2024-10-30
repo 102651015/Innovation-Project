@@ -32,7 +32,7 @@ async def root():
     return {"message": "Welcome to the Southern Metropolitan Region House Category Prediction API"}
 
 @app.post("/predict/")
-async def predict_price(input: prediction_input):
+async def predict_category(input: prediction_input):
     try:
         #Category, where: 0 is Affordable, and 1 is Expensive
         category = int(model.predict(input.rooms, input.buildingArea, input.type, 
