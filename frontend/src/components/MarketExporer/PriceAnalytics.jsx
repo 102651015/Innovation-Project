@@ -1,19 +1,32 @@
+// PriceAnalytics.js
 import React, { useState } from 'react';
 import { Select, MenuItem } from '@mui/material';
 import styles from './PriceAnalytics.module.css';
 import { PriceCard } from './PriceCard';
 import { InfoButton } from './InfoButton';
 
-const PriceAnalytics = () => {
-  // 使用 useState 保存每个 PriceCard 的输入值
-  const [prices, setPrices] = useState(Array(6).fill(''));
+// Define the labels for each PriceCard field
+const labels = [
+  'rooms',
+  'buildingArea',
+  'type',
+  'yearBuilt',
+  'bathroom',
+  'carspace'
+];
 
-  const handlePriceChange = (index, value) => {
-    const updatedPrices = [...prices];
-    updatedPrices[index] = value; // 更新指定 index 的价格值
-    setPrices(updatedPrices);
+const PriceAnalytics = () => {
+  // Use useState to store the input values of each PriceCard
+  const [values, setValues] = useState(Array(6).fill(''));
+
+  // Update the value for the specified index in the values array
+  const handleValueChange = (index, value) => {
+    const updatedValues = [...values];
+    updatedValues[index] = value;
+    setValues(updatedValues);
   };
 
+  // Send data to the backend for prediction
   const handlePredict = async () => {
     try {
       const response = await fetch('http://localhost:8000/predict', {
@@ -21,7 +34,7 @@ const PriceAnalytics = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prices }), // 将 prices 数组发送到后端
+        body: JSON.stringify({ values }), // Send the values array to the backend
       });
 
       if (response.ok) {
@@ -40,7 +53,8 @@ const PriceAnalytics = () => {
       <section className={styles.wrapper}>
         <div className={styles.card}>
           <div className={styles.content}>
-
+            
+            {/* Chart Controls: Allows user to select chart type and trigger prediction */}
             <aside className={styles.chartSection}>
               <div className={styles.chartControls}>
                 <Select
@@ -62,12 +76,14 @@ const PriceAnalytics = () => {
               </div>
             </aside>
 
+            {/* Grid section containing PriceCard components for each data input */}
             <section className={styles.priceGrid}>
-              {prices.map((_, index) => (
-                <PriceCard key={index} index={index} onPriceChange={handlePriceChange} />
+              {labels.map((label, index) => (
+                <PriceCard key={index} index={index} label={label} onValueChange={handleValueChange} />
               ))}
             </section>
 
+            {/* Information section with InfoButton components */}
             <aside className={styles.infoSection}>
               <div className={styles.infoCard}>
                 <h2 className={styles.infoTitle}>Do you want to know more?</h2>
@@ -90,3 +106,5 @@ const PriceAnalytics = () => {
 };
 
 export default PriceAnalytics;
+
+
