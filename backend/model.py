@@ -74,7 +74,10 @@ class KNNmodel:
         #Therefore, drop features that are not selected
         data.drop(columns=['Landsize', 'Lattitude', 'Distance', 'Longtitude', 'Regionname'], inplace=True)
 
+        #Save processed dataset
+        data.to_csv('processed_melbourne_housing.csv', index=False)
 
+        
         #DATA SPLITTING
         features = ['Rooms', 'BuildingArea', 'Type', 'YearBuilt', 'Bathroom', 'Car'] #features selected
         X = data[features]   
