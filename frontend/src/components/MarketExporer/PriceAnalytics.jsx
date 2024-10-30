@@ -29,14 +29,24 @@ const PriceAnalytics = () => {
   // Send data to the backend for prediction
   const handlePredict = async () => {
     try {
-      const response = await fetch('http://localhost:8000/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ values }), // Send the values array to the backend
-      });
+            // Construct the request body to match the expected format in the backend
+            const data = {
+              rooms: parseInt(values[0], 10),
+              buildingArea: parseInt(values[1], 10),
+              type: parseInt(values[2], 10),
+              yearBuilt: parseInt(values[3], 10),
+              bathroom: parseInt(values[4], 10),
+              carspace: parseInt(values[5], 10),
+            };
 
+            const response = await fetch("http://localhost:8000/predict", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+            
       if (response.ok) {
         const result = await response.json();
         console.log('Prediction result:', result);
